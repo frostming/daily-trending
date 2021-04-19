@@ -42,7 +42,7 @@ class GitHub:
         self.users.add(self._get_me())
 
     @staticmethod
-    def _get_trending_repos(since: TrendingSince.DAILY) -> Iterable[Repository]:
+    def _get_trending_repos(since: TrendingSince) -> Iterable[Repository]:
         resp = requests.get(f"https://github.com/trending?since={since}")
         tree = html.fromstring(resp.content)
         for box in tree.xpath('//article[@class="Box-row"]'):
@@ -70,7 +70,7 @@ class GitHub:
             )
 
     @staticmethod
-    def _get_trending_developers(since: TrendingSince.DAILY) -> Iterable[Developer]:
+    def _get_trending_developers(since: TrendingSince) -> Iterable[Developer]:
         resp = requests.get(f"https://github.com/trending/developers?since={since}")
         tree = html.fromstring(resp.content)
         for box in tree.xpath('//article[@class="Box-row d-flex"]'):

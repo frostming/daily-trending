@@ -11,3 +11,4 @@ class Telegram:
         data = {"chat_id": to, "text": message, "parse_mode": "MarkdownV2"}
         resp = requests.post(url, data=data)
         print(resp.json())
+        resp.raise_for_status()

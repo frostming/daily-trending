@@ -46,7 +46,8 @@ def run_main(gh_token: str, tg_token: str, tg_chat: str):
     repos = github.get_trending_repos()
     developers = github.get_trending_developers()
     message = format_message(repos, developers)
-    telegram.send_message(tg_chat, message)
+    if message:
+        telegram.send_message(tg_chat, message)
 
 
 if __name__ == "__main__":
