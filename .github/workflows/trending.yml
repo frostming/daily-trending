@@ -15,7 +15,7 @@ jobs:
         uses: pdm-project/setup-pdm@main
         with:
           python-version: 3.9
-          prereleases: true
+          prerelease: true
       - name: Install dependencies
         run: pdm install -v
       - name: Run
