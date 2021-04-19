@@ -1,0 +1,25 @@
+name: Daily Trending
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  trending:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@main
+        python-version: 3.9
+      - name: Install dependencies
+        run: pdm install
+      - name: Run
+        run: pdm run python -m trending
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT: ${{ secrets.TG_CHAT }}
+          GITHUB_USER: ${{ github.repository_owner }}
