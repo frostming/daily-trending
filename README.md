@@ -4,7 +4,7 @@ This simple workflow sends GitHub Trending everyday that someone in your followi
 
 ## Requirements
 
-1. A GitHub acccess token with **user** priviledges
+1. A GitHub access token with **user** priviledges
 2. A Telegram Bot API token
 
 ## Usage
