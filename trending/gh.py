@@ -43,7 +43,7 @@ class GitHub:
 
     @staticmethod
     def _get_trending_repos(since: TrendingSince) -> Iterable[Repository]:
-        resp = requests.get(f"https://github.com/trending?since={since}")
+        resp = requests.get(f"https://github.com/trending?since={since.value}")
         tree = html.fromstring(resp.content)
         for box in tree.xpath('//article[@class="Box-row"]'):
             yield Repository(
@@ -71,7 +71,9 @@ class GitHub:
 
     @staticmethod
     def _get_trending_developers(since: TrendingSince) -> Iterable[Developer]:
-        resp = requests.get(f"https://github.com/trending/developers?since={since}")
+        resp = requests.get(
+            f"https://github.com/trending/developers?since={since.value}"
+        )
         tree = html.fromstring(resp.content)
         for box in tree.xpath('//article[@class="Box-row d-flex"]'):
             yield Developer(
