@@ -46,6 +46,7 @@ class GitHub:
         resp = requests.get(f"https://github.com/trending?since={since.value}")
         tree = html.fromstring(resp.content)
         for box in tree.xpath('//article[@class="Box-row"]'):
+            print(box)
             yield Repository(
                 url=(temp := next(iter(box.xpath("./h1/a/@href")), "").strip("/")),
                 author=temp.split("/")[0],
@@ -55,12 +56,12 @@ class GitHub:
                     "",
                 ).strip(),
                 stars=int(
-                    box.xpath('.//svg[@aria-label="star"]/../text()')[1]
+                    (box.xpath('.//svg[@aria-label="star"]/../text()') + ["0", "0"])[1]
                     .strip()
                     .replace(",", "_")
                 ),
                 forks=int(
-                    box.xpath('.//svg[@aria-label="fork"]/../text()')[1]
+                    (box.xpath('.//svg[@aria-label="fork"]/../text()') + ["0", "0"])[1]
                     .strip()
                     .replace(",", "_")
                 ),
@@ -135,3 +136,7 @@ class GitHub:
                 if dev.username in self.users:
                     result[since].append(dev)
         return result
+
+
+if __name__ == "__main__":
+    print(*GitHub._get_trending_repos(TrendingSince.DAILY), sep="\n")
